@@ -1,0 +1,16 @@
+role:
+exports.onExecutePostLogin = async (event, api) => {
+  const assignedRoles = (event.authorization || {}).roles;
+
+  api.idToken.setCustomClaim('http://schemas.microsoft.com/ws/2008/06/identity/claims/role', assignedRoles);
+}
+
+email:
+
+exports.onExecutePostLogin = async (event, api) => {
+  if (!event.user.email_verified) {
+    
+    api.redirect.sendUserTo('https://{domain}/v2/logout?returnTo={allowed_url_in_logout_with_encyption}&client_id={clientId}')
+
+  }
+};
