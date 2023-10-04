@@ -51,6 +51,10 @@ public class AccountController : Controller
     [Authorize]
     public IActionResult Profile()
     {
+        var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        // In your database, check if user exist's or not.
+        // if(userNotExists)=> create new entry with 'userId'. You can alsow save Other user info.
+
         var userProfile = new UserProfile
         {
             Name = User.Identity.Name,
